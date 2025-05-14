@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { FaPhone, FaLocationDot, FaRegClock } from "react-icons/fa6";
 import Map from '../Map/Map';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const videos = [
@@ -44,8 +45,30 @@ function Home() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        try {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbw8mIpXL1X9Mdtz11uf9EY2qrJjlSknURTjtU-WB8RBi_xh1UjnPLzK5THUIzcCZZrWSw/exec', {
+                method: 'POST',
+                mode: 'no-cors', // CORS mode ni yoqamiz
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+
+            const text = await response.text(); // Avval text sifatida olish
+            const data = text ? JSON.parse(text) : {}; // JSON parse qilish
+
+            console.log(data.message || 'Maʼlumotlar saqlandi');
+            alert("Ma'lumotlar saqlandi!")
+            setFormData({ name: '', phone: '', course: '', age: '' });
+        } catch (error) {
+            console.error(`Xatolik: ${error.message}`);
+            console.error('Error details:', error);
+        } finally {
+        }
         console.log('Form submitted:', formData);
     };
 
@@ -69,9 +92,10 @@ function Home() {
                                     <p className="text-xs xl:text-xl sm:text-sm mb-2">
                                         получите бесплатное первое занятие
                                     </p>
-                                    <button className="bg-black text-[#FFE000] font-bold py-1 px-3 sm:py-2 sm:px-4 text-xs sm:text-base rounded-md transition-colors w-full sm:w-auto lg:text-2xl">
-                                        ПЕРЕЙТИ К КУРСАМ
-                                    </button>
+                                    <Link to='/register'>
+                                        <button className="bg-black text-[#FFE000] font-bold py-1 px-3 sm:py-2 sm:px-4 text-xs sm:text-base rounded-md transition-colors w-full sm:w-auto lg:text-2xl">
+                                            ПЕРЕЙТИ К КУРСАМ
+                                        </button></Link>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +138,7 @@ function Home() {
                 </section>
 
                 {/* Courses Section */}
-                <div className="bg-[url('./imgs/StyleVector2.png')] bg-cover bg-center px-4 sm:px-8">
+                <div id='about' className="bg-[url('./imgs/StyleVector2.png')] bg-cover bg-center px-4 sm:px-8">
                     <section className='max-w-[1280px] mx-auto'>
                         <h1 className='text-center font-bold text-4xl sm:text-6xl lg:text-[96px] text-[#FFE000] mt-8 md:mt-[80px]'>
                             Авторские кусы<br />
@@ -126,9 +150,9 @@ function Home() {
                                     <img src={`./imgs/Robo${item}.png`} alt={`Robo${item}`} className="w-full h-auto" />
                                     <h1 className='font-bold text-xl sm:text-[30px] mt-4'>Робототехника</h1>
                                     <div className='flex justify-end mt-4 sm:mt-[110px]'>
-                                        <button className='bg-black text-white rounded-xl py-2 px-4 text-sm sm:text-base'>
+                                        <Link to={'/register'}><button className='bg-black text-white rounded-xl py-2 px-4 text-sm sm:text-base'>
                                             Подробнее о кусе
-                                        </button>
+                                        </button></Link>
                                     </div>
                                 </div>
                             ))}
@@ -181,7 +205,7 @@ function Home() {
                 </section>
 
                 {/* Free Lesson Form */}
-                <section className='max-w-[1280px] mx-auto mt-8 md:mt-[80px] px-4 sm:px-8'>
+                <section id='contact' className='max-w-[1280px] mx-auto mt-8 md:mt-[80px] px-4 sm:px-8'>
                     <h1 className='font-bold text-center text-3xl sm:text-5xl lg:text-[96px] text-[#ffe000]'>
                         получите бесплатный<br />
                         первый урок

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FaTimes, FaInstagram, FaLinkedin, FaTwitter, FaPhone } from 'react-icons/fa';
 import { HiMenu } from 'react-icons/hi';
 import { IoIosArrowDown } from 'react-icons/io'
+import { Link } from 'react-router-dom';
 
 function Navbar() {
     const [isCoursesOpen, setIsCoursesOpen] = useState(false);
@@ -12,12 +13,12 @@ function Navbar() {
             <div className="max-w-[1280px] mx-auto flex justify-between items-center px-4">
                 {/* Left side - Logo and navigation items */}
                 <div className="flex items-center space-x-8">
-                    <img className='w-12 h-12 md:w-[64px] md:h-[64px]' src="./imgs/Logo.png" alt="Logo" />
+                    <Link to={'/'}><img className='w-12 h-12 md:w-[64px] md:h-[64px]' src="./imgs/Logo.png" alt="Logo" /></Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-6">
-                        <a href="#" className="text-white font-medium hover:text-[#FFE000] transition-colors text-sm lg:text-base">Главная</a>
-                        <a href="#" className="text-white font-medium hover:text-[#FFE000] transition-colors text-sm lg:text-base">О нас</a>
+                        <Link to={'/'}><a href="#" className="text-white font-medium hover:text-[#FFE000] transition-colors text-sm lg:text-base">Главная</a></Link>
+                        <a href="#about" className="text-white font-medium hover:text-[#FFE000] transition-colors text-sm lg:text-base">О нас</a>
 
                         {/* Courses dropdown */}
                         <div className="relative">
@@ -31,22 +32,23 @@ function Navbar() {
 
                             {isCoursesOpen && (
                                 <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">Курс 1</a>
-                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">Курс 2</a>
-                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">Курс 3</a>
+                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">робототехника</a>
+                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">Английский</a>
+                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">Живопись для детей</a>
+                                    <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-[#FFE000] hover:text-black text-sm">Живопись для взрослых</a>
                                 </div>
                             )}
                         </div>
 
-                        <a href="#" className="text-white font-medium hover:text-[#FFE000] transition-colors text-sm lg:text-base">Контакты</a>
+                        <a href="#contact" className="text-white font-medium hover:text-[#FFE000] transition-colors text-sm lg:text-base">Контакты</a>
                     </div>
                 </div>
 
                 {/* Right side items */}
                 <div className="flex items-center space-x-6">
-                    <button className="hidden md:flex items-center bg-[#FFE000] hover:bg-yellow-500 text-black font-medium py-2 px-6 rounded-md transition-colors text-sm lg:text-base">
+                    <Link to={'/register'}><button className="hidden md:flex items-center bg-[#FFE000] hover:bg-yellow-500 text-black font-medium py-2 px-6 rounded-md transition-colors text-sm lg:text-base">
                         <FaPhone className="mr-2" /> ПОЗВОНИТЬ
-                    </button>
+                    </button></Link>
 
                     <div className="flex space-x-2">
                         <button className="text-white font-medium px-3 py-1 rounded hover:bg-[#FFE000] hover:text-black transition-colors text-sm">RU</button>
@@ -79,14 +81,14 @@ function Navbar() {
                     {/* Centered menu items */}
                     <div className="flex-1 flex flex-col justify-center items-center space-y-8 px-4">
                         <a
-                            href="#"
+                            href="/"
                             className="text-white text-2xl font-medium hover:text-[#FFE000] transition-colors py-2"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >
                             Главная
                         </a>
                         <a
-                            href="#"
+                            href="#about"
                             className="text-white text-2xl font-medium hover:text-[#FFE000] transition-colors py-2"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >
@@ -95,26 +97,30 @@ function Navbar() {
 
                         {/* Mobile Courses dropdown */}
                         <div className="relative text-center">
-                            <button
-                                className="text-[#FFE000] text-2xl font-medium hover:text-[#FFE000] flex items-center gap-1 mx-auto py-2"
-                            >
-                                Курсы
-                            </button>
+                            <Link to={'/register'} onClick={() => setIsMobileMenuOpen(false)}>
+                                <button
+                                    className="text-[#FFE000] text-2xl font-medium hover:text-[#FFE000] flex items-center gap-1 mx-auto py-2"
+                                >
+                                    Курсы
+                                </button>
+                            </Link>
                         </div>
 
                         <a
-                            href="#"
+                            href="#contact"
                             className="text-white text-2xl font-medium hover:text-[#FFE000] transition-colors py-2"
                             onClick={() => setIsMobileMenuOpen(false)}
                         >
                             Контакты
                         </a>
-                        <button
-                            className="flex items-center bg-[#FFE000] hover:bg-yellow-500 text-black font-medium text-xl py-3 px-8 rounded-md transition-colors mt-4"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            <FaPhone className="mr-2" /> ПОЗВОНИТЬ
-                        </button>
+                        <Link to={'/register'}>
+                            <button
+                                className="flex items-center bg-[#FFE000] hover:bg-yellow-500 text-black font-medium text-xl py-3 px-8 rounded-md transition-colors mt-4"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                                <FaPhone className="mr-2" /> ПОЗВОНИТЬ
+                            </button>
+                        </Link>
                     </div>
 
                     {/* Social icons at bottom */}
