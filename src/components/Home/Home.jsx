@@ -7,44 +7,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Map from '../Map/Map';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../Language/Language';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-// Animation variants
-const container = {
-    hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
-    }
-};
-
-const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
-
-const float = {
-    y: [0, -20, 0],
-    transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut"
-    }
-};
-
-const pulse = {
-    scale: [1, 1.05, 1],
-    transition: {
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut"
-    }
-};
-
 function Home() {
+    const { t } = useLanguage();
     const videos = [
         { id: 1, title: "Video 1", duration: "2:45" },
         { id: 2, title: "Video 2", duration: "4:20" },
@@ -73,10 +41,10 @@ function Home() {
     });
 
     const courses = [
-        "робототехника",
-        "Английский",
-        "Живопись для детей",
-        "Живопись для взрослых",
+        t.courses.robotics,
+        t.courses.english,
+        t.courses.paintingKids,
+        t.courses.paintingAdults,
     ];
 
     // Counting animation effect
@@ -126,8 +94,8 @@ function Home() {
             const text = await response.text();
             const data = text ? JSON.parse(text) : {};
 
-            console.log(data.message || 'Maʼlumotlar saqlandi');
-            alert("Ma'lumotlar saqlandi!");
+            console.log(data.message || "Ma'lumotlar saqlandi");
+            alert(t.common.dataSaved || "Ma'lumotlar saqlandi!");
             setFormData({ name: '', phone: '', course: '', age: '' });
         } catch (error) {
             console.error(`Xatolik: ${error.message}`);
@@ -150,15 +118,15 @@ function Home() {
                         >
                             <div>
                                 <h1 className="text-xl sm:text-3xl lg:text-4xl xl:text-[84px] font-[600] text-black mb-2 leading-tight">
-                                    JustRobotics
+                                    {t.home.title}
                                 </h1>
                                 <p className="text-xs sm:text-base lg:text-3xl text-black mb-3 sm:mb-4 font-semibold">
-                                    Твой проводник в мир технологий и искусства
+                                    {t.home.subtitle}
                                 </p>
 
                                 <div className="text-black">
                                     <p className="text-xs xl:text-xl sm:text-sm mb-2">
-                                        получите бесплатное первое занятие
+                                        {t.home.freeLesson}
                                     </p>
                                     <Link to='/register'>
                                         <motion.button
@@ -166,14 +134,14 @@ function Home() {
                                             whileTap={{ scale: 0.95 }}
                                             className="bg-black text-[#FFE000] font-bold py-1 px-3 sm:py-2 sm:px-4 text-xs sm:text-base rounded-md transition-colors w-full sm:w-auto lg:text-2xl"
                                         >
-                                            ПЕРЕЙТИ К КУРСАМ
+                                            {t.home.goToCourses}
                                         </motion.button>
                                     </Link>
                                 </div>
                             </div>
                         </motion.div>
 
-                        {/* Robot Image with floating animation */}
+                        {/* Robot Image */}
                         <motion.div
                             animate={float}
                             className="flex-shrink-0"
@@ -199,9 +167,9 @@ function Home() {
                         className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-8"
                     >
                         {[
-                            { number: `${counts.students}+`, text: "ДОВОЛЬНЫХ СТУДЕНТОВ" },
-                            { number: `${counts.teachers}+`, text: "Преподавателей" },
-                            { number: `${counts.groups}+`, text: "групп" }
+                            { number: `${counts.students}+`, text: t.home.stats.students },
+                            { number: `${counts.teachers}+`, text: t.home.stats.teachers },
+                            { number: `${counts.groups}+`, text: t.home.stats.groups }
                         ].map((stat, index) => (
                             <motion.div
                                 key={index}
@@ -224,7 +192,7 @@ function Home() {
                     className='bg-white mt-[40px] xl:mt-[-25px] px-4 sm:px-8'
                 >
                     <p className='max-w-[1280px] mx-auto py-8 md:py-[80px] text-base md:text-[20px] font-[400]'>
-                        <b>JustRobotics</b> – это современный учебный центр, специализирующийся на технологиях, искусстве и образовании. Мы предоставляем комфортную и поддерживающую среду для развития талантов и навыков наших учеников. Команда высококвалифицированных преподавателей использует передовые методики и технологии, делая занятия интерактивными и увлекательными. Мы уделяем большое внимание индивидуальному подходу, помогая каждому ученику раскрыть свои способности и достичь успеха. <br /> <b>JustRobotics</b> – это сообщество увлеченных и целеустремленных людей, предлагающее не только учебные курсы, но и мероприятия, мастер-классы и конкурсы. Удобное расположение учебного центра обеспечивает легкий доступ для всех желающих.
+                        {t.home.aboutText}
                     </p>
                 </motion.section>
 
@@ -245,19 +213,21 @@ function Home() {
                             viewport={{ once: true }}
                             className='text-center font-bold text-4xl sm:text-6xl lg:text-[96px] text-[#FFE000] mt-8 md:mt-[80px]'
                         >
-                            Авторские кусы<br />
-                            от JustRobotics
+                            {t.home.coursesTitle}
                         </motion.h1>
                         <div className='flex justify-center xl:flex-wrap overflow-x-auto pl-[200px] xl:pl-0 gap-4 sm:gap-[58px] mt-8 md:mt-[80px]'>
-                            {[1, 2, 3, 4, 5].map((item) => (
+                            {[{ name: t.courses.robotics, item: 1 },
+                            { name: t.courses.english, item: 2 },
+                            { name: t.courses.paintingKids, item: 3 },
+                            { name: t.courses.paintingAdults, item: 4 },].map((course) => (
                                 <motion.div
-                                    key={item}
+                                    key={course.item}
                                     whileHover={{ y: -5 }}
                                     transition={{ duration: 0.3 }}
                                     className='bg-[#ffe000] w-full sm:w-[400px] lg:w-[551px] flex flex-col justify-center rounded-2xl p-4 sm:py-[40px] sm:px-[50px] mb-4 course-card'
                                 >
-                                    <img src={`./imgs/Robo${item}.png`} alt={`Robo${item}`} className="w-full h-auto" />
-                                    <h1 className='font-bold text-xl sm:text-[30px] mt-4'>Робототехника</h1>
+                                    <img src={`./imgs/Robo${course.item}.png`} alt={`Robo${item}`} className="w-full h-auto" />
+                                    <h1 className='font-bold text-xl sm:text-[30px] mt-4'>{course.name}</h1>
                                     <div className='flex justify-end mt-4 sm:mt-[110px]'>
                                         <Link to={'/register'}>
                                             <motion.button
@@ -265,7 +235,7 @@ function Home() {
                                                 whileTap={{ scale: 0.95 }}
                                                 className='bg-black text-white rounded-xl py-2 px-4 text-sm sm:text-base'
                                             >
-                                                Подробнее о кусе
+                                                {t.home.goToCourses}
                                             </motion.button>
                                         </Link>
                                     </div>
@@ -283,7 +253,7 @@ function Home() {
                     viewport={{ once: true, amount: 0.2 }}
                     className='max-w-[1280px] mx-auto mt-8 md:mt-[120px] px-4 sm:px-8'
                 >
-                    <h1 className='font-bold text-xl sm:text-[23px] text-[#F0D625]'>отзывы</h1>
+                    <h1 className='font-bold text-xl sm:text-[23px] text-[#F0D625]'>{t.home.reviewsTitle}</h1>
                     <div className="relative mt-4">
                         <Swiper
                             modules={[Navigation]}
@@ -354,9 +324,9 @@ function Home() {
                         viewport={{ once: true }}
                         className='font-bold text-center text-3xl sm:text-5xl lg:text-[96px] text-[#ffe000]'
                     >
-                        получите бесплатный<br />
-                        первый урок
+                        {t.home.getFreeLesson}
                     </motion.h1>
+
                     <div className="mx-auto p-4 sm:p-6 shadow-md mt-4 sm:mt-8">
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex gap-4 mb-4">
@@ -365,7 +335,7 @@ function Home() {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: 0.1 }}
                                     viewport={{ once: true }}
-                                    placeholder='Ваше имя'
+                                    placeholder={t.home.form.name}
                                     type="text"
                                     id="name"
                                     name="name"
@@ -375,12 +345,14 @@ function Home() {
                                     required
                                 />
 
+
+
                                 <motion.input
                                     initial={{ opacity: 0, x: -20 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: 0.2 }}
                                     viewport={{ once: true }}
-                                    placeholder='Номер телефона'
+                                    placeholder={t.home.form.phone}
                                     type="tel"
                                     id="phone"
                                     name="phone"
@@ -402,7 +374,7 @@ function Home() {
                                     className="px-3 py-2 border bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#ffe000] w-full"
                                     required
                                 >
-                                    <option value="">Выберете курс</option>
+                                    <option value="">{t.home.form.selectName}</option>
                                     {courses.map((course, index) => (
                                         <option key={index} value={course}>{course}</option>
                                     ))}
@@ -413,7 +385,7 @@ function Home() {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.5, delay: 0.4 }}
                                     viewport={{ once: true }}
-                                    placeholder='Возраст'
+                                    placeholder={t.home.form.age}
                                     type="number"
                                     id="age"
                                     name="age"
@@ -422,6 +394,7 @@ function Home() {
                                     className="px-3 py-2 border bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#ffe000] w-full"
                                     required
                                 />
+
                                 <motion.button
                                     animate={pulse}
                                     whileHover={{ scale: 1.05 }}
@@ -429,7 +402,7 @@ function Home() {
                                     type="submit"
                                     className="w-full sm:w-auto bg-[#ffe000] text-black py-3 px-8 rounded-md cursor-pointer transition duration-300 block mx-auto"
                                 >
-                                    ПОЛУЧИТЬ
+                                    {t.home.form.get}
                                 </motion.button>
                             </div>
                         </form>
@@ -446,43 +419,17 @@ function Home() {
                             whileHover={{ scale: 1.05 }}
                             className='w-full sm:w-[310px] h-[78px] bg-[#ffe000] text-black text-xl sm:text-3xl rounded-xl flex items-center justify-center shadow-md shadow-[#ffe000]'
                         >
-                            Филиал Ц4
+                            {t.home.branches.c4}
                         </motion.div>
                         <motion.div
                             whileHover={{ scale: 1.05 }}
                             className='w-full sm:w-[310px] h-[78px] bg-white text-black text-xl sm:text-3xl rounded-xl flex items-center justify-center shadow-md'
                         >
-                            Филиал Беруни
+                            {t.home.branches.beruni}
                         </motion.div>
                     </motion.div>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ staggerChildren: 0.1 }}
-                        viewport={{ once: true }}
-                        className='flex flex-col sm:flex-row justify-center gap-4 sm:gap-[50px] mt-8 sm:mt-[80px]'
-                    >
-                        {[
-                            { icon: <FaPhone />, text: "Адрес Орьентир" },
-                            { icon: <FaLocationDot />, text: "График работы" },
-                            { icon: <FaRegClock />, text: "Номера телефонов" }
-                        ].map((item, index) => (
-                            <motion.div
-                                key={index}
-                                variants={item}
-                                className='flex justify-center items-center gap-3'
-                            >
-                                <motion.span
-                                    whileHover={{ rotate: 360 }}
-                                    className='bg-[#ffe000] rounded-full text-black text-[24px] flex items-center justify-center p-3'
-                                >
-                                    {item.icon}
-                                </motion.span>
-                                <p className='text-white font-normal text-base sm:text-[20px]'>{item.text}</p>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                    {/* ... kontaktlar qismi ... */}
                 </motion.section>
 
                 {/* Map Section */}
@@ -496,8 +443,42 @@ function Home() {
                     <Map />
                 </motion.section>
             </main>
-        </div>
+        </div >
     )
 }
+
+// Animation variants
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+};
+
+const float = {
+    y: [0, -20, 0],
+    transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+    }
+};
+
+const pulse = {
+    scale: [1, 1.05, 1],
+    transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+    }
+};
 
 export default Home;

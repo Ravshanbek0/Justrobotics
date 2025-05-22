@@ -1,7 +1,9 @@
 import React from 'react'
 import { FaHeart, FaPlayCircle, FaYoutube } from 'react-icons/fa';
+import { useLanguage } from '../../Language/Language';
 
 function Footer() {
+    const { t } = useLanguage()
     return (
         <footer className="bg-[#ffe000] text-black py-8 md:py-10">
             <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,23 +33,23 @@ function Footer() {
 
                     {/* Courses */}
                     <div className="text-center md:text-left">
-                        <h3 className="font-bold text-lg mb-3 md:mb-4">Курсы</h3>
+                        <h3 className="font-bold text-lg mb-3 md:mb-4">{t.footer.courseF}</h3>
                         <ul className="space-y-1 md:space-y-2 text-sm md:text-base">
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Работотехника</li>
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Английский для взрослых</li>
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Английский для детей</li>
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Шахмат</li>
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Живопись</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.courses.robotics}</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.courses.english}</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.courses.paintingKids}</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.courses.math}</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.courses.sciense}</li>
                         </ul>
                     </div>
 
                     {/* Contacts */}
                     <div className="text-center md:text-left">
-                        <h3 className="font-bold text-lg mb-3 md:mb-4">Контакты</h3>
+                        <h3 className="font-bold text-lg mb-3 md:mb-4">{t.footer.contactF.cFtitle}</h3>
                         <ul className="space-y-1 md:space-y-2 text-sm md:text-base">
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Телеграм</li>
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Инстаграм</li>
-                            <li className="hover:text-gray-700 cursor-pointer transition-colors">Ютюб</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.footer.contactF.cFTelegram}</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.footer.contactF.cFInsta}</li>
+                            <li className="hover:text-gray-700 cursor-pointer transition-colors">{t.footer.contactF.cFYoutube}</li>
                         </ul>
                     </div>
                 </div>

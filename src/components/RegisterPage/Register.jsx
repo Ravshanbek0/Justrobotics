@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../Language/Language";
 
 function Register() {
+    const { t } = useLanguage()
     const [formData, setFormData] = useState({
         name: "",
         phoneNumber: "",
@@ -68,7 +70,7 @@ function Register() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10">
                     <div>
                         <h1 className="text-white text-2xl md:text-3xl font-bold mb-8 text-center md:text-left">
-                            Приглашаем на первый урок!
+                            {t.register.title}
                         </h1>
                         <form
                             className="bg-white p-6 md:p-8 rounded-xl shadow-md space-y-4"
@@ -77,7 +79,7 @@ function Register() {
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="Name"
+                                placeholder={t.home.form.name}
                                 value={formData.name}
                                 onChange={handleChange}
                                 className="w-full p-3 border rounded-md focus:outline-none focus:border-yellow-500"
@@ -87,7 +89,7 @@ function Register() {
                             <input
                                 type="text"
                                 name="phoneNumber"
-                                placeholder="Phone number"
+                                placeholder={t.home.form.phone}
                                 value={formData.phoneNumber}
                                 onChange={handleChange}
                                 className="w-full p-3 border rounded-md focus:outline-none focus:border-yellow-500"
@@ -97,7 +99,7 @@ function Register() {
                                 <input
                                     type="number"
                                     name="age"
-                                    placeholder="Age"
+                                    placeholder={t.home.form.age}
                                     value={formData.age}
                                     onChange={handleChange}
                                     className="w-1/2 p-3 border rounded-md focus:outline-none focus:border-yellow-500"
@@ -110,11 +112,12 @@ function Register() {
                                     className="w-1/2 p-3 border rounded-md focus:outline-none focus:border-yellow-500"
                                     required
                                 >
-                                    <option value="">Выберите курс</option>
-                                    <option value="робототехника">робототехника</option>
-                                    <option value="Английский">Английский</option>
-                                    <option value="Живопись для детей">Живопись для детей</option>
-                                    <option value="Живопись для взрослых">Живопись для взрослых</option>
+                                    <option value="">{t.home.form.course}</option>
+                                    <option value="робототехника">{t.courses.robotics}</option>
+                                    <option value="Английский">{t.courses.english}</option>
+                                    <option value="Живопись для детей">{t.courses.paintingKids}</option>
+                                    <option value="Живопись для взрослых">{t.courses.paintingAdults}</option>
+                                    <option value="Живопись для взрослых">{t.courses.programming}</option>
                                 </select>
                             </div>
                         </form>
@@ -124,7 +127,7 @@ function Register() {
                         <div className="flex gap-4 flex-col lg:flex-row">
                             <Link to={'/'}>
                                 <button className="bg-white  w-[310px] px-6 py-3 rounded-md text-black hover:bg-gray-200">
-                                    НАЗАД
+                                    {t.register.button1}
                                 </button>
                             </Link>
                             <button
@@ -133,7 +136,7 @@ function Register() {
                                 className={`bg-yellow-500 w-[310px] text-black py-3 rounded-md hover:bg-yellow-600 shadow-md px-4 ${!validateForm() ? 'opacity-50 cursor-not-allowed' : ''
                                     }`}
                             >
-                                ЗАПИСАТЬСЯ
+                                {t.register.button2}
                             </button>
                         </div>
                     </div>
